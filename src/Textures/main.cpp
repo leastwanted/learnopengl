@@ -7,6 +7,10 @@
 
 #include <iostream>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -148,6 +152,14 @@ int main()
 	ourShader.setInt("texture2", 1);
 	ourShader.setInt("texture1", 0);
 
+	glm::mat4 trans;
+
+	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+	unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -170,7 +182,24 @@ int main()
 		// render container
 		ourShader.use();
 		ourShader.setFloat("mixValue", mixValue);
+		trans = glm::rotate(trans, glm::radians(1.0f), glm::vec3(0.0, 0.0, 1.0));
+		//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
+		glm::mat4 transform;
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+
 		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		glm::mat4 transform2;
+		transform2 = glm::translate(transform2, glm::vec3(-0.5f, +0.5f, 0.0f));
+		double dScale = glm::sin(glfwGetTime());
+		transform2 = glm::scale(transform2, glm::vec3(dScale));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform2));
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
