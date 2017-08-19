@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\LightCasters\main.cpp">
+    <ClCompile Include="..\..\src\MultipleLights\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\glad.c">
@@ -23,10 +23,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\LightCasters\light_caster.vs">
+    <None Include="..\..\src\MultipleLights\multiple_lights.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\src\LightCasters\light_caster.fs">
+    <None Include="..\..\src\MultipleLights\multiple_lights.fs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
